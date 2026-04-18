@@ -26,6 +26,11 @@ body {
     border-radius: 15px;
 }
 
+#todo-form {
+    display: flex;
+    gap: 10px;
+}
+
 #header {
     margin: 5px;
     font-size: 20px;
@@ -37,7 +42,7 @@ h1 {
 }
 
 #input-button {
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
     transition: 0.4s;
     padding: 10px;
@@ -45,44 +50,62 @@ h1 {
     border-radius: 5px;
     background-color: #6366f1;
     color: white;
+    white-space: nowrap;
+    box-sizing: border-box;
 }
 
 #input-button:hover {
     background-color: #818cf8;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
-  text-align:left;
+.input-item {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 1px solid #6366f1;
+    background: #a1a1aa ;
+    color: 18181b;
+    box-sizing: border-box;
+}
 
+.input-item::placeholder {
+    color: #4e4e58;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    text-align: left;
 }
 
 li {
-border: 1px solid #3f3f46;
-border-radius: 5px;
-margin-bottom: 10px;
-padding: 10px;
-margin-top: 10px;
-background: #27272a;
-color: #e4e4e7;
+    border: 1px solid #3f3f46;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    background: #27272a;
+    color: #e4e4e7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .edit-btn, .delete-btn {
-  float: right;
-  color: #a5b4fc;
-  cursor: pointer;
-  margin: 3px 5px;
-  border: none;
-  padding: 3px 5px;
-  background: none;
-} 
+    color: #a5b4fc;
+    cursor: pointer;
+    margin: 3px 5px;
+    border: none;
+    padding: 3px 5px;
+    background: none;
+}
 
 .completed {
-  text-decoration: line-through;
-  color: #a1a1aa;
-  border: 1px solid #71717a;
+    text-decoration: line-through;
+    color: #a1a1aa;
+    border: 1px solid #71717a;
 }
 
 #all-complete-message {
@@ -91,4 +114,144 @@ color: #e4e4e7;
     font-weight: bold;
     text-align: center;
     margin-top: 20px;
+}
+
+#reset-btn {
+    margin-left: 10px;
+    padding: 4px 10px;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#reset-btn:hover {
+    background-color: #818cf8;
+}
+
+.important {
+    border: 1px solid #facc15;
+}
+
+.star-btn {
+    cursor: pointer;
+    margin: 3px 5px;
+    line-height: 1;
+}
+
+.task-buttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.task-left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+}
+
+.task-left label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Chat */
+#chat-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+#chat-btn:hover {
+    background-color: #818cf8;
+}
+
+#chat-window {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    height: 350px;
+    background: #27272a;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid #6366f1;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    resize: both;
+    overflow: hidden;
+    min-width: 250px;
+    min-height: 300px;
+    max-width: 600px;
+    max-height: 600px;
+    position: fixed;
+}
+
+#chat-messages {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 60px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#chat-input-area {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.user-message {
+    background: #6366f1;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    align-self: flex-end;
+    max-width: 80%;
+}
+
+.ai-message {
+    background: #3f3f46;
+    color: #e4e4e7;
+    padding: 8px 12px;
+    border-radius: 8px;
+    align-self: flex-start;
+    max-width: 80%;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #6366f1;
+    background: #18181b;
+    color: white;
+}
+
+#chat-input-area button {
+    padding: 8px 12px;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

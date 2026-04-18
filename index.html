@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang = "en">
     <head>
+        <meta charset = "UTF-8">
         <title>To-Do List</title>
         <link rel = "stylesheet" href = "style.css"/>
     </head>
@@ -26,6 +27,17 @@
             <hr />
             <div class="task-counters">
                 Completed: <span id="completed-counter">0</span> | Uncompleted: <span id = "uncompleted-counter">0</span>
+                <button id="reset-btn" onclick="resetTasks()">Reset</button>
+            </div>
+        </div>
+
+        <button id = "chat-btn" onclick="toggleChat()">Ask AI</button>
+
+        <div id = "chat-window" style = "display:none;">
+            <div id="chat-messages"></div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask me anything...">
+                <button onclick="sendMessage()">Send</button>
             </div>
         </div>
 
