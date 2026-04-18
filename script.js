@@ -12,7 +12,8 @@ function saveTasks() {
         tasks.push({
             text:li.querySelector(".task-text").textContent, 
             completed: li.classList.contains("completed"),
-            important: li.classList.contains("important")
+            important: li.classList.contains("important"),
+            subtasks: li.dataset.subtasks ? JSON.parse(li.dataset.subtasks) : []
         });
     });
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -22,7 +23,7 @@ function loadTasks() {
     const saved = localStorage.getItem("tasks");
     if (!saved) return;
     JSON.parse(saved).forEach(task => {
-        addTask(task.text, task.completed, task.important);
+        addTask(task.text, task.completed, task.important, task.subtasks || []);
     });
 }
 
@@ -32,7 +33,7 @@ inputBox.addEventListener("keypress", function(event) {
     }
 });
 
-function addTask(savedText = null, savedCompleted = false, savedImportant = false) {
+function addTask(savedText = null, savedCompleted = false, savedImportant = false, savedSubtasks = []) {
     const task = savedText || inputBox.value.trim();
     if (!task) {
         alert("Please write down a task");
@@ -49,6 +50,7 @@ function addTask(savedText = null, savedCompleted = false, savedImportant = fals
         </label>
     </div>
     <div class = "task-buttons">
+        <span class="subtask-btn">+</span>
         <span class="edit-btn">Edit</span>
         <span class="delete-btn">Delete</span>
     </div>
@@ -70,6 +72,10 @@ function addTask(savedText = null, savedCompleted = false, savedImportant = fals
         saveTasks();
     })
 
+    const subtaskBtn = li.querySelector(".subtask-btn");
+    subtaskBtn.addEventListener("click", function() {
+        openSubtasks(li);
+    });
     checkbox.checked = savedCompleted;
     if (savedCompleted) li.classList.add("completed");
 
@@ -101,6 +107,9 @@ function addTask(savedText = null, savedCompleted = false, savedImportant = fals
         }
     });
 
+    if (savedSubtasks.length > 0) {
+        li.dataset.subtasks = JSON.stringify(savedSubtasks);
+    }
     listContainer.appendChild(li);
     inputBox.value = "";
     updateCounters();
@@ -144,20 +153,26 @@ async function sendMessage() {
     const message = input.value.trim();
     if (!message) return;
 
-    // Get current tasks
     const tasks = [];
     document.querySelectorAll("#list-container li").forEach(li => {
+        const subtasks = li.dataset.subtasks ? JSON.parse(li.dataset.subtasks) : [];
         tasks.push({
             text: li.querySelector(".task-text").textContent,
             completed: li.classList.contains("completed"),
-            important: li.classList.contains("important")
+            important: li.classList.contains("important"),
+            subtasks: subtasks
         });
     });
 
-    // Build message with task context
     const fullMessage = `
 You are a helpful to-do list assistant. Here are the user's current tasks:
-${tasks.map(t => `- ${t.text} (completed: ${t.completed}, starred: ${t.important})`).join("\n")}
+${tasks.map(t => {
+    let taskLine = `- ${t.text} (completed: ${t.completed}, starred: ${t.important})`;
+    if (t.subtasks.length > 0) {
+        taskLine += `\n  Subtasks:\n` + t.subtasks.map(s => `    • ${s.text} (completed: ${s.completed})`).join("\n");
+    }
+    return taskLine;
+}).join("\n")}
 
 User message: ${message}`;
 
@@ -186,4 +201,91 @@ function formatMessage(text) {
         .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
         .replace(/\n/g, "<br>")
         .replace(/^\d+\.\s/gm, "<br>• ");
+}
+
+let activeTask = null;
+
+function openSubtasks(li) {
+    activeTask = li;
+    const taskName = li.querySelector(".task-text").textContent;
+    document.getElementById("subtask-title").textContent = `Subtasks: ${taskName}`;
+    
+    const subtaskList = document.getElementById("subtask-list");
+    subtaskList.innerHTML = "";
+    
+    const saved = li.dataset.subtasks ? JSON.parse(li.dataset.subtasks) : [];
+    saved.forEach(subtask => {
+        addSubtaskToList(subtask.text, subtask.completed);
+    });
+    
+    document.getElementById("subtask-panel").style.display = "flex";
+    document.getElementById("subtask-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            addSubtask();
+        }
+    });
+}
+
+function closeSubtasks() {
+    document.getElementById("subtask-panel").style.display = "none";
+    activeTask = null;
+}
+
+function addSubtask() {
+    const input = document.getElementById("subtask-input");
+    const text = input.value.trim();
+    if (!text) return;
+    
+    addSubtaskToList(text, false);
+    input.value = "";
+    saveSubtasks();
+}
+
+document.getElementById("subtask-input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        addSubtask();
+    }
+});
+
+function addSubtaskToList(text, completed) {
+    const subtaskList = document.getElementById("subtask-list");
+    const li = document.createElement("li");
+    
+    if (completed) li.classList.add("subtask-completed");
+    
+    li.innerHTML = `
+    <label>
+        <input type="checkbox" ${completed ? "checked" : ""}>
+        <span>${text}</span>
+    </label>
+    <button class="subtask-delete">🗑</button>
+    `;
+    
+    const checkbox = li.querySelector("input");
+    checkbox.addEventListener("click", function() {
+        li.classList.toggle("subtask-completed", checkbox.checked);
+        li.querySelector("label span").style.textDecoration = checkbox.checked ? "line-through" : "none";
+        li.querySelector("label span").style.color = checkbox.checked ? "#a1a1aa" : "white";
+        saveSubtasks();
+    });
+    
+    li.querySelector(".subtask-delete").addEventListener("click", function() {
+        li.remove();
+        saveSubtasks();
+    });
+    
+    subtaskList.appendChild(li);
+}
+
+function saveSubtasks() {
+    if (!activeTask) return;
+    const subtasks = [];
+    document.querySelectorAll("#subtask-list li").forEach(li => {
+        subtasks.push({
+            text: li.querySelector("label span").textContent,
+            completed: li.classList.contains("subtask-completed")
+        });
+    });
+    activeTask.dataset.subtasks = JSON.stringify(subtasks);
+    saveTasks();
 }

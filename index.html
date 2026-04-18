@@ -31,6 +31,18 @@
             </div>
         </div>
 
+        <div id = "subtask-panel" style = "display:none;">
+            <div id = "subtask-header">
+                <span id="subtask-title">Subtasks</span>
+                <span id="subtask-close" onclick="closeSubtasks()"></span>
+            </div>
+            <ul id="subtask-list"></ul>
+            <div id="subtask-input-area">
+                <input type="text" id="subtask-input" placeholder="Add subtask...">
+                <button onclick="addSubtask()">Add</button>
+            </div>
+        </div>
+
         <button id = "chat-btn" onclick="toggleChat()">Ask AI</button>
 
         <div id = "chat-window" style = "display:none;">

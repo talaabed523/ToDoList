@@ -255,3 +255,119 @@ li {
     border-radius: 5px;
     cursor: pointer;
 }
+
+#subtask-panel {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: calc(50% + 220px);
+    width: 280px;
+    height: 400px;
+    background: #18181b;
+    border: 2px solid #6366f1;
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+#subtask-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#subtask-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+#subtask-close {
+    cursor: pointer;
+    color: #a1a1aa;
+    font-size: 16px;
+}
+
+#subtask-close:hover {
+    color: white;
+}
+
+#subtask-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#subtask-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #27272a;
+    border: 1px solid #3f3f46;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: 0;
+}
+
+#subtask-list li label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.subtask-delete {
+    color: #a5b4fc;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 3px 5px;
+}
+
+.subtask-completed {
+    text-decoration: line-through;
+    color: #a1a1aa;
+}
+
+#subtask-input-area {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+#subtask-input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #6366f1;
+    background: #27272a;
+    color: white;
+    font-size: 14px;
+}
+
+#subtask-input::placeholder {
+    color: #71717a;
+}
+
+#subtask-input-area button {
+    padding: 8px 12px;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#subtask-input-area button:hover {
+    background-color: #818cf8;
+}
