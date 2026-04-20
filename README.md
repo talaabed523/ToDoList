@@ -54,5 +54,4 @@ This project allows users to manage their daily tasks efficiently with an intuit
 6. Open `index.html` in your browser
 
 ```
-```
 > ⚠️ The AI chatbot requires the Node.js server to be running locally.
