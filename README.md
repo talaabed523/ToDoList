@@ -48,16 +48,11 @@ This project allows users to manage their daily tasks efficiently with an intuit
 
 1. Clone the repository
 2. Run `npm install`
-3. Open `server.js` and replace `YOUR_GROQ_API_KEY_HERE` with your actual key:
-const GROQ_API_KEY = "your-actual-key-here";
-```
-```
-4. Get a free Groq API key at [console.groq.com](https://console.groq.com)
-5. Start the backend server:
-node server.js
-```
-```
+3. Get a free Groq API key at [console.groq.com](https://console.groq.com)
+4. Open `server.js` and replace `YOUR_GROQ_API_KEY_HERE` with your actual key
+5. Start the backend server: `node server.js`
 6. Open `index.html` in your browser
 
-> ⚠️ The AI chatbot requires the Node.js server to be running locally.
+```
+```
 > ⚠️ The AI chatbot requires the Node.js server to be running locally.
