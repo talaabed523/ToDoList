@@ -6,7 +6,7 @@ This project allows users to manage their daily tasks efficiently with an intuit
 ---
 
 ## 📸 Preview
-![To-Do List App](screenshot.png)
+![To-Do List App](Screenshot.png)
 
 ---
 
